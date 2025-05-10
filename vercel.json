@@ -5,12 +5,5 @@
   ],
   "buildCommand": "npm install",
   "outputDirectory": ".",
-  "devCommand": "npm run dev",
-  "kv": [
-    {
-      "binding": "KV_KNOWLEDGE_GRAPH",
-      "databaseName": "knowledge-graph-db",
-      "region": "iad1"
-    }
-  ]
+  "devCommand": "npm run dev"
 }
