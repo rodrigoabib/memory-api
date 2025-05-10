@@ -1,29 +1,24 @@
 // api/index.js
 const { json } = require('body-parser');
 const express = require('express');
-const cors = require('cors');
 const KnowledgeGraphManager = require('../lib/knowledge-graph-manager');
 
 // Create Express app
 const app = express();
-
-// CORS configuration
-const corsOptions = {
-  origin: '*', // ou array específico: ['http://localhost:5173', 'https://seu-frontend.com']
-  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
-  credentials: true,
-  maxAge: 3600
-};
-
-// Apply CORS middleware
-app.use(cors(corsOptions));
-
-// Apply body parser
 app.use(json());
 
-// Handle preflight requests
-app.options('*', cors(corsOptions));
+// Simple CORS middleware
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
+  next();
+});
 
 const knowledgeGraphManager = new KnowledgeGraphManager();
 
